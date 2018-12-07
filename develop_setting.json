@@ -1,0 +1,14 @@
+{
+  "mysql": {
+    "corgi": {
+      "host": "47.98.118.105",
+      "user": "corgi",
+      "password": "1q2w3e4r5t",
+      "database": "corgi",
+      "max_pool_size": 30
+    }
+  },
+  "socket": {
+
+  }
+}

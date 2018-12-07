@@ -3,7 +3,6 @@
 import tornado.web
 
 
-class LoginHandler(tornado.web.RequestHandler):
-
-    def get(self, *args, **kwargs):
-        self.write("hello")
+class Index(tornado.web.RequestHandler):
+    def get(self):
+        self.render('register.html', data="hh")

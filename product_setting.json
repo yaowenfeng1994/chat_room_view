@@ -1,0 +1,11 @@
+{
+  "mysql": {
+    "corgi": {
+      "host": "127.0.0.1",
+      "user": "corgi",
+      "password": "1qa2ws3ed",
+      "database": "corgi",
+      "max_pool_size": 30
+    }
+  }
+}
