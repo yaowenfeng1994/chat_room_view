@@ -5,7 +5,7 @@ import tornado.options
 import tornado.httpserver
 import tornado.web
 from tornado.options import define, options
-import os, sys, datetime
+import os
 
 define("port", default="8080", help="run on the given port", type=int)
 define("sql_debug", default=False, type=bool)
@@ -15,7 +15,9 @@ settings = dict(
     cookie_secret="RYxFqFQyRCiCZ/nxFfTMCrbqZpRZ5UW9tQ86fKvrfIw=",
     login_url="/login",
     # debug=options.debug,
-    template_path=os.path.join(os.path.dirname(__file__), "templates")
+    template_path=os.path.join(os.path.dirname(__file__), "templates"),
+    # 静态文件
+    static_path=os.path.join(os.path.dirname(__file__), "static"),
 )
 
 url = [
