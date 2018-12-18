@@ -3,7 +3,7 @@
 
 import json
 
-from handler.base import BaseHandler
+from handlers.base import BaseHandler
 
 from model.account import Account
 

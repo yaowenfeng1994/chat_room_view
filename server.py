@@ -11,8 +11,8 @@ define("port", default="8080", help="run on the given port", type=int)
 define("sql_debug", default=False, type=bool)
 
 settings = dict(
-    xsrf_cookies=True,
-    cookie_secret="RYxFqFQyRCiCZ/nxFfTMCrbqZpRZ5UW9tQ86fKvrfIw=",
+    # xsrf_cookies=True,
+    # cookie_secret="RYxFqFQyRCiCZ/nxFfTMCrbqZpRZ5UW9tQ86fKvrfIw=",
     login_url="/login",
     # debug=options.debug,
     template_path=os.path.join(os.path.dirname(__file__), "templates"),
@@ -23,7 +23,7 @@ settings = dict(
 url = [
     # 获取产品信息
     (r"^/v1/register",
-     "handlers.index.Index"),
+     "handlers.account.register.RegisterHandler"),
 ]
 
 
