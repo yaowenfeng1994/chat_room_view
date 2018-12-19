@@ -176,6 +176,12 @@
 <div>
     <div id="wrapper" class="login-page">
         <div id="login_form" class="form">
+            <form class="login-form">
+                <input type="text" placeholder="账号" id="account"/>
+                <input type="password" placeholder="密码" id="password"/>
+                <button id="login">登　录</button>
+                <p class="message">还没有账户? <a href="#">立刻创建</a></p>
+            </form>
             <form class="register-form">
                 <input type="text" placeholder="账号" id="r_account"/>
                 <input type="password" placeholder="密码" id="r_password"/>
@@ -183,12 +189,7 @@
                 <button id="create">创建账户</button>
                 <p class="message">已经有了一个账户? <a href="#">立刻登录</a></p>
             </form>
-            <form class="login-form">
-                <input type="text" placeholder="账号" id="account"/>
-                <input type="password" placeholder="密码" id="password"/>
-                <button id="login">登　录</button>
-                <p class="message">还没有账户? <a href="#">立刻创建</a></p>
-            </form>
+
         </div>
     </div>
 </div>
@@ -267,6 +268,35 @@
 //                $("#form").attr("action", data.data.REDIRECT)
 //                $("#form").submit();
 //            },
+            success: function (data) {
+                if (data.err_code == "0") {
+                    alert("注册成功");
+                } else {
+                    alert(data.err_msg);
+                }
+            },
+        })
+    });
+    $("#login").on("click", function () {
+        let account = $("#account").val();
+        let password = $("#password").val();
+        let para = {
+            account: account,
+            password: password
+        };
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/v1/login",
+            data: para,
+            success: function (data) {
+                if (data.err_code == "0") {
+                    alert("登陆成功");
+                } else {
+                    alert(data.err_msg);
+                }
+            },
         })
     });
 </script>

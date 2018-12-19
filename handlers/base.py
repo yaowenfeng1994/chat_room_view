@@ -44,8 +44,7 @@ class BaseHandler(tornado.web.RequestHandler):
         password = data_obj.get("password")
         database = data_obj.get("database")
         max_pool_size = data_obj.get("max_pool_size")
-        logging.info("database_info:"+str(data_obj))
-
+        # logging.info("database_info:"+str(data_obj))
         # auto_commit = database_setting.mysql.trading.auto_commit()
 
         self.dtx = None

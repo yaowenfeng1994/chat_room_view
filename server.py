@@ -21,9 +21,10 @@ settings = dict(
 )
 
 url = [
-    # 获取产品信息
     (r"^/v1/register",
      "handlers.account.register.RegisterHandler"),
+    (r"^/v1/login",
+     "handlers.account.login.LoginHandler"),
 ]
 
 

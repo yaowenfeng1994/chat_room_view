@@ -12,10 +12,6 @@ from libs.exceptions import MissingArgumentException, PasswordDiffException, Cre
 
 
 class RegisterHandler(BaseHandler):
-
-    def get(self, *args, **kwargs):
-        self.render("register.html")
-
     def post(self, *args, **kwargs):
         # if isinstance(self.request.body, bytes):
         #     extract_data = json.loads(self.request.body.decode("utf-8"))
@@ -29,22 +25,21 @@ class RegisterHandler(BaseHandler):
             account = self.get_argument("r_account")
             password = self.get_argument("r_password")
             confirm_password = self.get_argument("r_confirm_password")
-            print(account, password, confirm_password)
-            # if not account or not password or not confirm_password:
-            #     raise MissingArgumentException
-            # elif confirm_password != password:
-            #     raise PasswordDiffException
-            #
-            # cursor = Account(self.cursor)
-            # result = cursor.create_account(account=account, password=password)
-            # if result:
-            #     self.write(response_json(
-            #         err_code=0x0000, data={}
-            #     ))
-            #     self.finish()
-            #     return
-            # else:
-            #     raise CreateAccountFailException
+            if not account or not password or not confirm_password:
+                raise MissingArgumentException
+            if confirm_password != password:
+                raise PasswordDiffException
+
+            cursor = Account(self.cursor)
+            result = cursor.create_account(account=account, password=password)
+            if result:
+                self.write(response_json(
+                    err_code=0x0000, data={}
+                ))
+                self.finish()
+                return
+            else:
+                raise CreateAccountFailException
 
         except (MissingArgumentException, PasswordDiffException, CreateAccountFailException) as why:
             self.write(response_json(

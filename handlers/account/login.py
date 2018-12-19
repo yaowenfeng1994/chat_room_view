@@ -13,17 +13,13 @@ from libs.exceptions import MissingArgumentException, LoginFailException
 
 
 class LoginHandler(BaseHandler):
+    def get(self, *args, **kwargs):
+        self.render("register.html")
 
     def post(self, *args, **kwargs):
-
-        if isinstance(self.request.body, bytes):
-            extract_data = json.loads(self.request.body.decode("utf-8"))
-        else:
-            extract_data = json.loads(self.request.body)
-        request_data = extract_data.get("data")
         try:
-            account = request_data.get("account")
-            password = request_data.get("password")
+            account = self.get_argument("account")
+            password = self.get_argument("password")
             if not account or not password:
                 raise MissingArgumentException
 

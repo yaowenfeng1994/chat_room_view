@@ -25,7 +25,7 @@ class Account(object):
         if user:
             return False
 
-        sql2 = "INSERT INTO corgi.`user` ( account, password, is_staff, create_time) VALUES (%s, %s, 0, %s);"
+        sql2 = "INSERT INTO corgi.`user` (account, password, is_staff, create_time) VALUES (%s, %s, 0, %s);"
         try:
             self.cursor.execute(sql2, (str(account), str(password), int(time.time())))
             return True
