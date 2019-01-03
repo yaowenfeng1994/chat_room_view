@@ -25,6 +25,8 @@ url = [
      "handlers.account.register.RegisterHandler"),
     (r"^/v1/login",
      "handlers.account.login.LoginHandler"),
+    (r"^/v1/chat",
+     "handlers.chat_room.ChatRoomHandler"),
 ]
 
 

@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import json
-
 from handlers.base import BaseHandler
 
 from model.account import Account
@@ -14,7 +12,7 @@ from libs.exceptions import MissingArgumentException, LoginFailException
 
 class LoginHandler(BaseHandler):
     def get(self, *args, **kwargs):
-        self.render("register.html")
+        self.render("login.html")
 
     def post(self, *args, **kwargs):
         try:
@@ -34,10 +32,10 @@ class LoginHandler(BaseHandler):
                 if not token_result:
                     raise LoginFailException(err_msg="创建token失败",
                                              err_msg_en="create token failure")
-                data = {"token": token}
                 self.write(response_json(
-                    err_code=0x0000, data=data
+                    err_code=0x0000, data={}
                 ))
+                self.set_cookie("token", token)
                 self.finish()
                 return
             else:

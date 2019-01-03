@@ -13,7 +13,7 @@ import tornado.web
 from model.account import Account
 
 
-def generate_token(user_info: dict, key: str, expire: int=3600):
+def generate_token(user_info: dict, key: str, expire: int=30):
     """
     用于生成token
     :param user_info: dict(用户信息字典)
@@ -43,8 +43,7 @@ def certify_token(key, token):
     if float(ts_str) < time.time():
         # token expired
         return False, dict()
-    user_info_str = json.loads(base64.urlsafe_b64decode(bytes(token_list[1], encoding="utf-8")).decode('utf-8'))
-    print(user_info_str)
+    user_info = json.loads(base64.urlsafe_b64decode(bytes(token_list[1], encoding="utf-8")).decode('utf-8'))
     known_sha1_str = token_list[2]
     sha1 = hmac.new(key.encode("utf-8"), ts_str.encode('utf-8'), 'sha1')
     calc_sha1_str = sha1.hexdigest()
@@ -52,7 +51,7 @@ def certify_token(key, token):
         # token certification failed
         return False, dict
     # token certification success
-    return True, user_info_str
+    return True, user_info
 
 
 class ParseToken(object):
@@ -68,6 +67,7 @@ class ParseToken(object):
 
     def __init__(self, that):
         self.cursor = that.cursor
+        self.__is_login = 0
         self.__token = ""
         self.__user_id = 0
         self.__nickname = ""
@@ -80,23 +80,23 @@ class ParseToken(object):
 
         assert isinstance(that, tornado.web.RequestHandler) is True
 
-        if "Authorization" in that.request.headers:
-            self.__token = that.request.headers.get("Authorization")
-            if self.token_exists_in_db():
-                boolean, user_info = certify_token(key="corgi_is_coming20180518", token=self.__token)
-                if boolean:
-                    self.__user_id = int(user_info.get("user_id"))
-                    if user_info.get("nickname"):
-                        self.__nickname = user_info.get("nickname")
-                    if user_info.get("sex"):
-                        self.__sex = int(user_info.get("sex"))
-                    if user_info.get("mobile"):
-                        self.__mobile = user_info.get("mobile")
-                    if user_info.get("email"):
-                        self.__email = user_info.get("email")
-                    if user_info.get("is_staff"):
-                        self.__is_staff = int(user_info.get("is_staff"))
-                    self.__token_expire = False
+        self.__token = that.get_cookie("token")
+        if self.token_exists_in_db():
+            boolean, user_info = certify_token(key="corgi_is_coming20180518", token=self.__token)
+            if boolean:
+                self.__is_login = 1
+                self.__user_id = int(user_info.get("user_id"))
+                if user_info.get("nickname"):
+                    self.__nickname = user_info.get("nickname")
+                if user_info.get("sex"):
+                    self.__sex = int(user_info.get("sex"))
+                if user_info.get("mobile"):
+                    self.__mobile = user_info.get("mobile")
+                if user_info.get("email"):
+                    self.__email = user_info.get("email")
+                if user_info.get("is_staff"):
+                    self.__is_staff = int(user_info.get("is_staff"))
+                self.__token_expire = False
 
     @property
     def token_expire(self):
@@ -129,6 +129,10 @@ class ParseToken(object):
     @property
     def is_staff(self):
         return self.__is_staff
+
+    @property
+    def is_login(self):
+        return self.__is_login
 
 # if __name__ == '__main__':
 #     key1 = "corgi_is_coming20180518"

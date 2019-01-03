@@ -31,7 +31,7 @@ def singleton(cls):
         else:
             if name not in instances[cls]:
                 instances[cls][name] = cls(name, **kwargs)
-        print(instances)
+        # print(instances)
         return instances[cls][name]
 
     return _singleton

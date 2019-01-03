@@ -196,47 +196,7 @@
 
 <script src="/static/js/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-    //    function check_login() {
-    //        var name = $("#user_name").val();
-    //        var pass = $("#password").val();
-    //        if (name == "sc.chinaz.com" && pass == "sc.chinaz.com") {
-    //            alert("登录成功！");
-    //            $("#user_name").val("");
-    //            $("#password").val("");
-    //
-    //        }
-    //        else {
-    //            $("#login_form").removeClass('shake_effect');
-    //            setTimeout(function () {
-    //                $("#login_form").addClass('shake_effect')
-    //            }, 1);
-    //        }
-    //    }
-    //    function check_register() {
-    //        var name = $("#r_user_name").val();
-    //        var pass = $("#r_password").val();
-    //        var email = $("r_email").val();
-    //        if (name != "" && pass == "" && email != "") {
-    //            alert("注册成功！");
-    //            $("#user_name").val("");
-    //            $("#password").val("");
-    //        }
-    //        else {
-    //            $("#login_form").removeClass('shake_effect');
-    //            setTimeout(function () {
-    //                $("#login_form").addClass('shake_effect')
-    //            }, 1);
-    //        }
-    //    }
     $(function () {
-//        $("#create").click(function () {
-//            check_register();
-//            return false;
-//        })
-//        $("#login").click(function () {
-//            check_login();
-//            return false;
-//        })
         $('.message a').click(function () {
             $('form').animate({
                 height: 'toggle',
@@ -260,14 +220,6 @@
             dataType: "json",
             url: "/v1/register",
             data: para,
-//            success: function (data) {
-//                $("#INFO").val(data.data.INFO);
-//                $("#BODY").val(data.data.BODY);
-//                $("#SIGN").val(data.data.SIGN);
-//                $("#CONTENTTYPE").val(data.data.CONTENTTYPE);
-//                $("#form").attr("action", data.data.REDIRECT)
-//                $("#form").submit();
-//            },
             success: function (data) {
                 if (data.err_code == "0") {
                     alert("注册成功");
@@ -293,6 +245,7 @@
             success: function (data) {
                 if (data.err_code == "0") {
                     alert("登陆成功");
+                    window.location.href = "/v1/chat";
                 } else {
                     alert(data.err_msg);
                 }

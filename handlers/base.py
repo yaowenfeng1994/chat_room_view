@@ -86,10 +86,11 @@ class BaseHandler(tornado.web.RequestHandler):
         :return:
         """
         t1 = time.time()
+
         if not self.__token:
             self.__token = ParseToken(self)
             t2 = time.time()
-            logging.info("ParseToken time:"+str(t2-t1))
+            logging.info("token:"+str(self.__token.token))
             return self.__token
         else:
             return self.__token
