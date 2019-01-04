@@ -13,7 +13,7 @@ import tornado.web
 from model.account import Account
 
 
-def generate_token(user_info: dict, key: str, expire: int=30):
+def generate_token(user_info: dict, key: str, expire: int = 3600):
     """
     用于生成token
     :param user_info: dict(用户信息字典)
@@ -55,7 +55,6 @@ def certify_token(key, token):
 
 
 class ParseToken(object):
-
     def token_exists_in_db(self):
 
         cursor = Account(self.cursor)
@@ -74,6 +73,7 @@ class ParseToken(object):
         self.__sex = 1
         self.__mobile = ""
         self.__email = ""
+        self.__account = ""
         self.__is_staff = 0
         # token是否过期或者失效
         self.__token_expire = True
@@ -88,6 +88,8 @@ class ParseToken(object):
                 self.__user_id = int(user_info.get("user_id"))
                 if user_info.get("nickname"):
                     self.__nickname = user_info.get("nickname")
+                if user_info.get("account"):
+                    self.__nickname = user_info.get("account")
                 if user_info.get("sex"):
                     self.__sex = int(user_info.get("sex"))
                 if user_info.get("mobile"):
@@ -113,6 +115,10 @@ class ParseToken(object):
     @property
     def nickname(self):
         return self.__nickname
+
+    @property
+    def account(self):
+        return self.__account
 
     @property
     def sex(self):
@@ -142,4 +148,3 @@ class ParseToken(object):
 #     print(len(token1), token1)
 #     result = certify_token(key1, token1)
 #     print(result)
-

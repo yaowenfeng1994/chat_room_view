@@ -46,7 +46,7 @@ class Account(object):
     def fetch_user_info(self, account):
         sql = """
           SELECT 
-          t1.id AS user_id, nickname, sex, mobile, email, is_staff  
+          t1.id AS user_id, nickname, sex, mobile, email, is_staff, t1.account  
           FROM corgi.user t1
           LEFT JOIN corgi.user_info t2
           ON t1.id = t2.user_id
